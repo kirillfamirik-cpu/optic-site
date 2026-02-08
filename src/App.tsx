@@ -68,10 +68,10 @@ function App() {
   }
 
   const handleCheckboxChange = (checked: boolean) => {
-    setFormData(prev => ({ ...prev, privacyAccepted: checked }))
-  
+  setFormData(prev => ({ ...prev, privacyAccepted: checked }))
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
 
   if (!formData.name || !formData.phone) {
@@ -121,27 +121,9 @@ function App() {
   }
 }
 
-    
-    if (!formData.name || !formData.phone) {
-      toast.error('Пожалуйста, заполните обязательные поля')
-      return
-    }
 
-    if (!formData.privacyAccepted) {
-      toast.error('Пожалуйста, примите политику конфиденциальности')
-      return
-    }
-
-    setIsSubmitting(true)
     
-    // Имитация отправки формы
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    toast.success('Заявка отправлена! Мы свяжемся с вами в ближайшее время.')
-    setFormData({ name: '', phone: '', city: '', telegram: '', comment: '', privacyAccepted: false })
-    setIsSubmitting(false)
-  }
-
+   
   const audienceItems = [
     { icon: Store, text: 'Магазины аксессуаров' },
     { icon: ShoppingBag, text: 'Продавцы на маркетплейсах' },
