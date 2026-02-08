@@ -72,7 +72,48 @@ function App() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  e.preventDefault()
+
+  if (!formData.name || !formData.phone) {
+    toast.error('Пожалуйста, заполните обязательные поля')
+    return
+  }
+
+  if (!formData.privacyAccepted) {
+    toast.error('Пожалуйста, примите политику конфиденциальности')
+    return
+  }
+
+  setIsSubmitting(true)
+
+  try {
+    const res = await fetch('/api/send-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    if (!res.ok) {
+      throw new Error('Ошибка отправки')
+    }
+
+    toast.success('Заявка отправлена! Мы свяжемся с вами в ближайшее время.')
+    setFormData({
+      name: '',
+      phone: '',
+      city: '',
+      telegram: '',
+      comment: '',
+      privacyAccepted: false,
+    })
+  } catch (error) {
+    toast.error('Ошибка отправки. Попробуйте позже.')
+  } finally {
+    setIsSubmitting(false)
+  }
+}
     
     if (!formData.name || !formData.phone) {
       toast.error('Пожалуйста, заполните обязательные поля')
