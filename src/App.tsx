@@ -92,7 +92,13 @@ function App() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        name: formData.name,
+        phone: formData.phone,
+        city: formData.city,
+        telegram: formData.telegram,
+        comment: formData.comment,
+      }),
     })
 
     if (!res.ok) {
@@ -109,11 +115,12 @@ function App() {
       privacyAccepted: false,
     })
   } catch (error) {
-    toast.error('Ошибка отправки. Попробуйте позже.')
+    toast.error('Ошибка отправки заявки. Попробуйте позже.')
   } finally {
     setIsSubmitting(false)
   }
 }
+
     
     if (!formData.name || !formData.phone) {
       toast.error('Пожалуйста, заполните обязательные поля')
