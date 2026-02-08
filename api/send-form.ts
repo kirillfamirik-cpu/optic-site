@@ -1,3 +1,8 @@
+console.log('ENV', {
+  token: process.env.TG_BOT_TOKEN,
+  chat: process.env.TG_CHAT_ID,
+})
+
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 const TELEGRAM_TOKEN = process.env.TG_BOT_TOKEN!
@@ -39,7 +44,7 @@ export default async function handler(
     if (!tgRes.ok) throw new Error('Telegram error')
 
     return res.status(200).json({ success: true })
-  } catch (err) {
+  } catch (err) { console.error('TG ERROR', err)
     return res.status(500).json({ error: 'Send failed' })
   }
 }
