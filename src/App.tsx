@@ -69,7 +69,7 @@ function App() {
 
   const handleCheckboxChange = (checked: boolean) => {
     setFormData(prev => ({ ...prev, privacyAccepted: checked }))
-  }
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
