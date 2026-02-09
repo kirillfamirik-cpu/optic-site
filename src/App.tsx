@@ -636,11 +636,11 @@ const handleSubmit = async (e: React.FormEvent) => {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-        {/*  <Phone className="w-5 h-5 text-green-600" />
+     <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+           {/*   <Phone className="w-5 h-5 text-green-600" />
         </div>
         <div>
-          <p className="text-sm text-gray-500">Телефон</p>
+         <p className="text-sm text-gray-500">Телефон</p>
           <a href={PHONE_LINK} className="text-gray-800 hover:text-green-600">
             {PHONE_NUMBER}
           </a> */}
