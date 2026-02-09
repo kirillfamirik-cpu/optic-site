@@ -144,10 +144,10 @@ const handleSubmit = async (e: React.FormEvent) => {
     { image: '/images/glasses-newn-02.jpg', title: 'Премиум авиаторы' },
     { image: '/images/glasses-new-03.jpg', title: 'Стильные жёлтые линзы' },
     { image: '/images/glasses-new-04.jpg', title: 'Женская классика' },
-    { image: '/images/glasses-new-05.jpg', title: 'Кошачий глаз' },
-    { image: '/images/glasses-new-06.jpg', title: 'Спортивные' },
-    { image: '/images/glasses-new-07.jpg', title: 'Черепаховые' },
-    { image: '/images/glasses-new-08.jpg', title: 'Оверсайз' },
+    { image: '/images/glasses-05.jpg', title: 'Премиальная классика' },
+    { image: '/images/glasses-06.jpg', title: 'Лёгкая элегантность' },
+    { image: '/images/glasses-07.jpg', title: 'Гламурный стиль' },
+    { image: '/images/glasses-08.jpg', title: 'Современный дизайн' },
   ]
 
   const trustItems = [
@@ -630,8 +630,8 @@ const handleSubmit = async (e: React.FormEvent) => {
         </div>
         <div>
           <p className="text-sm text-gray-500">Email</p>
-          <a href="mailto:example@mail.ru" className="text-gray-800 hover:text-blue-600">
-            example@mail.ru
+          <a href="mailto:kirillfamirik@gmail.com" className="text-gray-800 hover:text-blue-600">
+            kirillfamirik@gmail.com
           </a>
         </div>
       </div>
