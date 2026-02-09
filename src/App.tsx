@@ -249,8 +249,8 @@ const handleSubmit = async (e: React.FormEvent) => {
                 href={PHONE_LINK}
                 className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
               >
-                //<Phone className="w-4 h-4" />
-                //<span className="text-sm">{PHONE_NUMBER}</span>
+               {/* <Phone className="w-4 h-4" />
+                <span className="text-sm">{PHONE_NUMBER}</span> */}
               </a>
               <button onClick={scrollToForm} className="text-gray-600 hover:text-gray-900 transition-colors">
                 Условия
@@ -285,8 +285,8 @@ const handleSubmit = async (e: React.FormEvent) => {
                 href={PHONE_LINK}
                 className="flex items-center gap-2 text-gray-600"
               >
-               // <Phone className="w-4 h-4" />
-              //  <span>{PHONE_NUMBER}</span>
+                <Phone className="w-4 h-4" />
+                <span>{PHONE_NUMBER}</span>
               </a>
               <button onClick={() => { scrollToForm(); setMobileMenuOpen(false); }} className="text-left text-gray-600">
                 Условия сотрудничества
@@ -640,9 +640,9 @@ const handleSubmit = async (e: React.FormEvent) => {
           <Phone className="w-5 h-5 text-green-600" />
         </div>
         <div>
-         // <p className="text-sm text-gray-500">Телефон</p>
-         // <a href={PHONE_LINK} className="text-gray-800 hover:text-green-600">
-         //   {PHONE_NUMBER}
+          <p className="text-sm text-gray-500">Телефон</p>
+          <a href={PHONE_LINK} className="text-gray-800 hover:text-green-600">
+            {PHONE_NUMBER}
           </a>
         </div>
       </div>
