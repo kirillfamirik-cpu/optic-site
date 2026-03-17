@@ -89,38 +89,42 @@ const handleSubmit = async (e: React.FormEvent) => {
   setIsSubmitting(true)
 
   try {
-    const res = await fetch('/api/send-form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        phone: formData.phone,
-        city: formData.city,
-        telegram: formData.telegram,
-        comment: formData.comment,
-      }),
-    })
+  const res = await fetch('/send.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      name: formData.name,
+      phone: formData.phone,
+      city: formData.city,
+      telegram: formData.telegram,
+      comment: formData.comment,
+    }),
+  })
 
-    if (!res.ok) {
-      throw new Error('Ошибка отправки')
-    }
+  const data = await res.json()
 
-    toast.success('Заявка отправлена! Мы свяжемся с вами в ближайшее время.')
-    setFormData({
-      name: '',
-      phone: '',
-      city: '',
-      telegram: '',
-      comment: '',
-      privacyAccepted: false,
-    })
-  } catch (error) {
-    toast.error('Ошибка отправки заявки. Попробуйте позже.')
-  } finally {
-    setIsSubmitting(false)
+  if (!res.ok || !data.success) {
+    throw new Error('Ошибка отправки')
   }
+
+  toast.success('Заявка отправлена! Мы свяжемся с вами в ближайшее время.')
+
+  setFormData({
+    name: '',
+    phone: '',
+    city: '',
+    telegram: '',
+    comment: '',
+    privacyAccepted: false,
+  })
+
+} catch (error) {
+  toast.error('Ошибка отправки заявки. Попробуйте позже.')
+} finally {
+  setIsSubmitting(false)
+}
 }
 
 
@@ -252,12 +256,12 @@ const handleSubmit = async (e: React.FormEvent) => {
                {/* <Phone className="w-4 h-4" />
                 <span className="text-sm">{PHONE_NUMBER}</span> */}
               </a>
-              <button onClick={scrollToForm} className="text-gray-600 hover:text-gray-900 transition-colors">
-                Условия
-              </button>
-              <button onClick={openTelegram} className="text-gray-600 hover:text-gray-900 transition-colors">
-                Telegram
-              </button>
+	<Button
+  		onClick={openTelegram} size="sm" variant="outline"
+  		className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white">
+  		Telegram
+	</Button>
+
               <Button 
                 onClick={scrollToForm} 
                 size="sm"
@@ -299,35 +303,49 @@ const handleSubmit = async (e: React.FormEvent) => {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            Поставки солнцезащитных очков<br className="hidden sm:block" /> для магазинов и продавцов
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-8">
-            Предложения для партнёров · Отгрузка по РФ · Условия по запросу
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              onClick={scrollToForm}
-              className="bg-green-500 hover:bg-green-600 text-white px-8"
-            >
-              Получить условия сотрудничества
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={openTelegram}
-              className="border-2 border-blue-500 text-blue-600 hover:bg-blue-50 px-8"
-            >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Написать в Telegram
-            </Button>
-          </div>
-        </div>
-      </section>
+     {/* Hero Section */}
+<section
+className="relative min-h-screen flex items-center justify-center 
+             px-4 sm:px-6 lg:px-8 
+             bg-cover bg-no-repeat"
+  style={{ 
+    backgroundImage: "url('/images/bg.jpg')",
+    backgroundPosition: "center 30%"
+  }}
+>
+<div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
+  <div className="relative max-w-4xl mx-auto text-center">
+    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+      Поставки солнцезащитных очков
+      <br className="hidden sm:block" />
+      для магазинов и продавцов
+    </h1>
+
+    <p className="text-lg md:text-xl text-gray-200 mb-8">
+      Предложения для партнёров · Отгрузка по РФ · Условия по запросу
+    </p>
+
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <Button
+        size="lg"
+        onClick={scrollToForm}
+        className="bg-green-500 hover:bg-green-600 text-white px-8"
+      >
+        Получить условия сотрудничества
+      </Button>
+
+      <Button
+        size="lg"
+        variant="outline"
+        onClick={openTelegram}
+        className="border-2 border-blue-400 text-blue-400 hover:bg-blue-500 hover:text-white px-8"
+      >
+        <MessageCircle className="w-5 h-5 mr-2" />
+        Написать в Telegram
+      </Button>
+    </div>
+  </div>
+</section>
 
       {/* Кому подойдёт */}
       <section className="py-16 bg-gray-50">
