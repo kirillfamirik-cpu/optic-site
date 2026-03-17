@@ -1,39 +1,49 @@
-console.log('ENV', {
-  token: process.env.TG_BOT_TOKEN,
-  chat: process.env.TG_CHAT_ID,
-})
-
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-
-const TELEGRAM_TOKEN = process.env.TG_BOT_TOKEN!
-const CHAT_ID = process.env.TG_CHAT_ID!
 
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' })
+    return res.status(405).json({ success: false, error: 'Method not allowed' })
   }
 
-  const { name, phone, city, telegram, comment } = req.body
+  const TELEGRAM_TOKEN = process.env.TG_BOT_TOKEN
+  const CHAT_ID = process.env.TG_CHAT_ID
 
-  const text = `
-📩 Новая заявка
-
-👤 Имя: ${name}
-📞 Телефон: ${phone}
-🏙 Город: ${city || '-'}
-💬 Telegram: ${telegram || '-'}
-📝 Комментарий: ${comment || '-'}
-`
+  if (!TELEGRAM_TOKEN || !CHAT_ID) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server environment variables are missing',
+    })
+  }
 
   try {
+    const {
+      name = '',
+      phone = '',
+      city = '',
+      telegram = '',
+      comment = '',
+    } = req.body || {}
+
+    const text = [
+      '📩 Новая заявка',
+      '',
+      `👤 Имя: ${name || '-'}`,
+      `📞 Телефон: ${phone || '-'}`,
+      `🏙 Город: ${city || '-'}`,
+      `💬 Telegram: ${telegram || '-'}`,
+      `📝 Комментарий: ${comment || '-'}`,
+    ].join('\n')
+
     const tgRes = await fetch(
       `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           chat_id: CHAT_ID,
           text,
@@ -41,10 +51,22 @@ export default async function handler(
       }
     )
 
-    if (!tgRes.ok) throw new Error('Telegram error')
+    const tgData = await tgRes.json()
+
+    if (!tgRes.ok || !tgData.ok) {
+      console.error('Telegram API error:', tgData)
+      return res.status(500).json({
+        success: false,
+        error: 'Telegram send failed',
+      })
+    }
 
     return res.status(200).json({ success: true })
-  } catch (err) { console.error('TG ERROR', err)
-    return res.status(500).json({ error: 'Send failed' })
+  } catch (error) {
+    console.error('Send form error:', error)
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+    })
   }
 }

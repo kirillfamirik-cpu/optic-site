@@ -89,10 +89,10 @@ const handleSubmit = async (e: React.FormEvent) => {
   setIsSubmitting(true)
 
   try {
-  const res = await fetch('/send.php', {
+  const res = await fetch('/api/send-form', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
     body: new URLSearchParams({
       name: formData.name,
